@@ -1,14 +1,11 @@
 'use client';
 
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import {Karla} from 'next/font/google'
 import './globals.css'
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu'
-import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import {usePathname} from 'next/navigation'
 
-const inter = Inter({ subsets: ['latin'] })
+const font = Karla({subsets: ['latin']})
 
 // export const metadata: Metadata = {
 //   title: 'Create Next App',
@@ -16,36 +13,42 @@ const inter = Inter({ subsets: ['latin'] })
 // }
 
 export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
+                                       children,
+                                   }: {
+    children: React.ReactNode
 }) {
 
 
-  const pathname = usePathname()
+    const pathname = usePathname()
 
-  return (
-    <html lang="fr-FR">
-      <body className={inter.className} vaul-drawer-wrapper="">
-        <div className="flex dark bg-background shadow-md md:shadow-xl justify-between" >
-          <nav className="flex h-16 items-center px-4 gap-5">
-            <Link href={"/"} className={`${pathname === '/' && 'text-foreground/80'} transition-colors hover:text-foreground/80 text-foreground/60`}>
-              InstantCiné
-            </Link>
-            <Link href={"/movie"} className={`${pathname === '/movie' && 'text-foreground/80'} transition-colors hover:text-foreground/80 text-foreground/60`}>
-              Films
-            </Link>
-            <Link href={"/session"} className={`${pathname === '/session' && 'text-foreground/80'} transition-colors hover:text-foreground/80 text-foreground/60`}>
-              Séances
-            </Link>
-          </nav>
-          <div className='flex items-center px-4 gap-2'>
-            <Link href={"/login"} className={`${pathname === '/login' && 'text-foreground/80'} transition-colors hover:text-foreground/80 text-foreground/60`}>
-              Connexion
-            </Link>
-          </div>
-        </div>
-        {children}
+    return (
+        <html lang="fr-FR" className={"dark"}>
+        <body className={`${font.className} bg-background`}>
+        <div vaul-drawer-wrapper={""}>
+            <div className="flex dark bg-background shadow-md md:shadow-xl justify-between">
+                <nav className="flex h-16 items-center px-4 gap-5">
+                    <Link href={"/"}
+                          className={`${pathname === '/' && 'text-foreground/80'} transition-colors hover:text-foreground/80 text-foreground/60`}>
+                        InstantCiné
+                    </Link>
+                    <Link href={"/movie"}
+                          className={`${pathname === '/movie' && 'text-foreground/80'} transition-colors hover:text-foreground/80 text-foreground/60`}>
+                        Films
+                    </Link>
+                    <Link href={"/session"}
+                          className={`${pathname === '/session' && 'text-foreground/80'} transition-colors hover:text-foreground/80 text-foreground/60`}>
+                        Séances
+                    </Link>
+                </nav>
+                <div className='flex items-center px-4 gap-2'>
+                    <Link href={"/login"}
+                          className={`${pathname === '/login' && 'text-foreground/80'} transition-colors hover:text-foreground/80 text-foreground/60`}>
+                        Connexion
+                    </Link>
+                </div>
+            </div>
+            {children}
+            {/*
         <footer className='flex flex-col gap-2 items-center dark bg-background text-white pt-5'>
           <div className='flex gap-5'>
             <div className='flex flex-col'>
@@ -69,8 +72,10 @@ export default function RootLayout({
           </div>
           <p>  InstantCiné 2024 - Tout droits réservés</p>
         </footer>
-      </body>
+        */}
+        </div>
+        </body>
 
-    </html >
-  )
+        </html>
+    )
 }

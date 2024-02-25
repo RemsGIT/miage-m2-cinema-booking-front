@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function Movie() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Button href="/">Accueil</Button>
+      <Button>Accueil</Button>
     </main>
   )
 }
