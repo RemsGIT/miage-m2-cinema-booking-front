@@ -1,11 +1,17 @@
 'use client';
 
-import {Karla} from 'next/font/google'
+import {Karla, Rubik} from 'next/font/google'
 import './globals.css'
 import Link from 'next/link'
 import {usePathname} from 'next/navigation'
+import {Toaster} from "@/components/ui/sonner";
 
-const font = Karla({subsets: ['latin']})
+import Logo from "../../public/logo.svg"
+import Image from "next/image";
+import {SessionProvider} from "next-auth/react";
+import {AuthProfileButton} from "@/components/auth-profile-button";
+
+const font = Rubik({subsets: ['latin']})
 
 // export const metadata: Metadata = {
 //   title: 'Create Next App',
@@ -22,32 +28,31 @@ export default function RootLayout({
     const pathname = usePathname()
 
     return (
-        <html lang="fr-FR" className={"dark"}>
+        <html lang="fr-FR" className={"dark"} suppressHydrationWarning>
         <body className={`${font.className} bg-background`}>
         <div vaul-drawer-wrapper={""}>
-            <div className="flex dark bg-background shadow-md md:shadow-xl justify-between">
-                <nav className="flex h-16 items-center px-4 gap-5">
+            <SessionProvider>
+
+            <div className="flex dark bg-black bg-opacity-30 shadow-md md:shadow-xl justify-between">
+                <nav className="flex py-2 items-center px-4 gap-8">
                     <Link href={"/"}
-                          className={`${pathname === '/' && 'text-foreground/80'} transition-colors hover:text-foreground/80 text-foreground/60`}>
-                        InstantCiné
+                          className={`${pathname === '/' && 'text-foreground/80'} transition-colors`}>
+                        <Image src={Logo} width={100} height={100} alt={""} className={"w-[80px]"}/>
                     </Link>
-                    <Link href={"/movie"}
-                          className={`${pathname === '/movie' && 'text-foreground/80'} transition-colors hover:text-foreground/80 text-foreground/60`}>
+                    <Link href={"/"}
+                          className={`${pathname === '/' ? 'text-primary' : 'hover:text-foreground/80'} font-bold transition-colors  text-foreground text-lg`}>
+                        Accueil
+                    </Link>
+                    <Link href={"/movies"}
+                          className={`${pathname === '/movies' ? 'text-primary' : 'hover:text-foreground/80'} font-bold transition-colors  text-foreground text-lg`}>
                         Films
-                    </Link>
-                    <Link href={"/session"}
-                          className={`${pathname === '/session' && 'text-foreground/80'} transition-colors hover:text-foreground/80 text-foreground/60`}>
-                        Séances
                     </Link>
                 </nav>
                 <div className='flex items-center px-4 gap-2'>
-                    <Link href={"/login"}
-                          className={`${pathname === '/login' && 'text-foreground/80'} transition-colors hover:text-foreground/80 text-foreground/60`}>
-                        Connexion
-                    </Link>
+                    <AuthProfileButton />
                 </div>
             </div>
-            {children}
+                {children}
             {/*
         <footer className='flex flex-col gap-2 items-center dark bg-background text-white pt-5'>
           <div className='flex gap-5'>
@@ -73,7 +78,11 @@ export default function RootLayout({
           <p>  InstantCiné 2024 - Tout droits réservés</p>
         </footer>
         */}
+            </SessionProvider>
+
         </div>
+    
+        <Toaster position={"top-right"}/>
         </body>
 
         </html>

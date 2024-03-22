@@ -6,6 +6,11 @@ import {Swiper, SwiperSlide} from 'swiper/react';
 import 'swiper/css';
 import {Card, CardContent} from "@/components/ui/card";
 import {Movie, Session} from "@/types";
+import {useFormContext} from "react-hook-form";
+import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group";
+import {Label} from "@/components/ui/label";
+import {FormField, FormMessage} from "@/components/ui/form";
+import {Check, CheckCircle, CheckCircle2} from "lucide-react";
 
 const currentDate = new Date();
 const allDates = [...Array(7 + 1)]
@@ -20,9 +25,11 @@ const formatDate = (dateString: string) => {
     };
 };
 
-export const MovieSessions = ({id}: { id: number }) => {
-    const [movieSessions, setMovieSessions] = useState<{movie: Movie, sessions: Session[]}>()
+export const TicketSessions = ({id}: { id: number }) => {
+    const form = useFormContext();
 
+
+    const [movieSessions, setMovieSessions] = useState<{movie: Movie, sessions: Session[]}>()
     const [slideDateActive, setSlideDateActive] = useState(0)
 
     useEffect(() => {
@@ -47,7 +54,7 @@ export const MovieSessions = ({id}: { id: number }) => {
 
     return (
         <div className={"mx-4 mt-8"}>
-            <h3 className={"text-xl text-secondary"}>Jour de ta séance</h3>
+            <h3 className={"text-xl text-muted-foreground"}>Jour de ta séance</h3>
             <Swiper
                 className={"mt-4"}
                 spaceBetween={10}
@@ -88,23 +95,47 @@ export const MovieSessions = ({id}: { id: number }) => {
 
 
             <div className={"mt-12"}>
-                <h3 className={"text-xl text-secondary"}>Heure de ta séance</h3>
-                <div className={"flex gap-4 flex-wrap justify-center mt-6"}>
-                    {getSessionsFromSelectedDate().map((session: Session, index) => {
-                        const date = new Date(session.date)
-                        return (
-                            <Card className={"h-max cursor-pointer"}>
-                                <CardContent className={"pl-2 min-w-[110px] pb-3"}>
-                                    <p className={"text-2xl"}>{`${date.getHours()}:${date.getMinutes()}`}</p>
-                                    <p className={"text-sm italic"}>{session.type.name}</p>
-                                </CardContent>
-                            </Card>
-                        )
+                <h3 className={"text-xl text-muted-foreground"}>Heure de ta séance</h3>
+                <FormField
+                    control={form.control}
+                    name={"session"}
+                    render={({field}) => (
+                        <>
+                            <RadioGroup
+                                className={"flex gap-4 flex-wrap justify-center mt-6 min-h-[50px"}
+                            >
+                                {getSessionsFromSelectedDate().map((session: Session, index) => {
+                                    const date = new Date(session.date)
+                                    return (
+                                        <Label>
+                                            <RadioGroupItem value={session.id.toString()} className={"hidden"} />
+                                            <Card
+                                                className={`h-max cursor-pointer relative ${field.value?.id === session.id.toString() ? 'border-card outline outline-primary outline-2' : ''}`}
+                                                onClick={_ => {
+                                                    form.setValue("session", {
+                                                        id: session.id.toString(),
+                                                        date: session.date,
+                                                        type: session.type.name,
+                                                        price: Number(session.type.price)
+                                                    })
+                                                }}
+                                            >
+                                                {field.value?.id === session.id.toString() && <Check className={"text-primary-foreground bg-primary rounded-full absolute -top-2 -right-2"} size={16} />}
+                                                <CardContent className={"pl-2 min-w-[110px] pb-3"}>
+                                                    <p className={"text-2xl"}>{`${date.getHours()}:${date.getMinutes()}`}</p>
+                                                    <p className={"text-sm italic"}>{session.type.name}</p>
+                                                </CardContent>
+                                            </Card>
+                                        </Label>
+                                    )
+                                })}
+                            </RadioGroup>
+                            <FormMessage className={"text-primary mt-4 ml-2 text-xl"} />
+                        </>
 
-                    })}
-                </div>
+                    )}
+                />
             </div>
-
         </div>
     )
 }

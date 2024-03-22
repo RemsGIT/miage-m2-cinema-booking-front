@@ -1,17 +1,19 @@
 import React, {useEffect, useState} from "react";
 import {User} from "lucide-react";
+import {useFormContext} from "react-hook-form";
 
-export const MovieSeats = ({session_id}:{session_id: number}) => {
+export const TicketSeats = ({session_id}:{session_id: number}) => {
     const capacity = 60;
     const max_col = 8
-    
-    const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
+    const form = useFormContext();
+
+
+    const [selectedSeats, setSelectedSeats] = useState<number[]>(form.getValues('seats'));
 
 
     const rows = Math.ceil(capacity / max_col);
 
     const handleSeatClick = (seatNumber: number) => {
-        console.log(seatNumber)
         const seatIndex = selectedSeats.indexOf(seatNumber);
         // Already selected: remove it
         if (seatIndex !== -1) {
@@ -24,7 +26,7 @@ export const MovieSeats = ({session_id}:{session_id: number}) => {
     };
 
     useEffect(() => {
-        console.log(selectedSeats)
+        form.setValue("seats", selectedSeats)
     }, [selectedSeats]);
 
     const generateSeatsGrid = () => {

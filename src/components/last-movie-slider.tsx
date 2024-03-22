@@ -10,7 +10,7 @@ export const LastMovieSlider = () => {
     const [movies, setMovies] = useState([])
 
     useEffect(() => {
-        const movies = fetcherGET("/movies").then(movies => {
+        const movies = fetcherGET("/movies?last=true").then(movies => {
             setMovies(movies)
         })
 
@@ -33,7 +33,7 @@ export const LastMovieSlider = () => {
                 {movies.map((movie: any, index: number) => (
                     <SwiperSlide>
                         <Link href={`/movie/${movie.id}`}>
-                            <img src={movie.image} className={"rounded-2xl"} alt={movie.name} />
+                            <img src={movie.image} className={"rounded-2xl h-[230px] md:h-[300px]"} alt={movie.name} />
                         </Link>
                     </SwiperSlide> 
                 ))}

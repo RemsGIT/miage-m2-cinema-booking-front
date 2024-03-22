@@ -1,7 +1,7 @@
 import axios from "@/lib/axios";
 import Image from "next/image";
 import {notFound} from "next/navigation";
-import {Calendar, Clapperboard, Clock10} from "lucide-react";
+import {Calendar, Clock10} from "lucide-react";
 
 const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('fr-FR', {dateStyle: 'long'});
@@ -16,7 +16,7 @@ export const MovieDescription = async ({id}: { id: number }) => {
     return (
         <div className={"p-4 min-h-[300px]"}>
             <div className={"grid grid-cols-3 gap-4"}>
-                <Image src={movieDescription.image} alt={""} width={200} height={300} className={"rounded-xl col-span-2 w-full max-w-[400px]"}/>
+                <img src={movieDescription.image} alt={""} width={200} height={300} className={"rounded-xl col-span-2 w-full max-w-[400px]"}/>
 
                 <div className={"h-full grid grid-rows-3 gap-4"}>
                     <div className={"border border-secondary rounded-lg"}>

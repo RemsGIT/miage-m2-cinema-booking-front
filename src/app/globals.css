@@ -67,3 +67,17 @@
 .swiper-wrapper {
   overflow-y: visible !important;
 }
+
+/* TOAST sonner */
+.toast[data-type="error"] {
+  background-color: hsl( 0 84.2% 60.2%) !important;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

@@ -6,7 +6,6 @@ export interface Movie {
     duration: number
     image: string
     categories: Category[]
-    releaseDate: string
 }
 
 export interface Category {
@@ -16,9 +15,10 @@ export interface Category {
 
 export interface Session {
     id: number,
-    date: Date,
+    movie: Movie
     type: Type,
     room: Room
+    date: Date,
 }
 
 export interface Type {

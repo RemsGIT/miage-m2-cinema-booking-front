@@ -1,5 +1,5 @@
 import {MovieDescription} from "@/components/movie/movie-description";
-import {MovieSessions} from "@/components/movie/movie-sessions";
+import {TicketSessions} from "@/components/ticket/ticket-sessions";
 import {ArrowLeft} from "lucide-react";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
