@@ -31,7 +31,7 @@ export const LastMovieSlider = () => {
                 }}  
             >
                 {movies.map((movie: any, index: number) => (
-                    <SwiperSlide>
+                    <SwiperSlide key={index}>
                         <Link href={`/movie/${movie.id}`}>
                             <img src={movie.image} className={"rounded-2xl h-[230px] md:h-[300px]"} alt={movie.name} />
                         </Link>

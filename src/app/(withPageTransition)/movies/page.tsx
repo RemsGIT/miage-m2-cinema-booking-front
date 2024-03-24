@@ -21,7 +21,7 @@ const MoviesPage = async () => {
 
             <div className={"flex flex-wrap gap-4 items-stretch mt-8 sm:m-12 justify-center"}>
                 {movies.map((movie: any, index: any) => (
-                    <Link href={`/movie/${movie.id}`} className={"w-[120px] sm:w-[250px]"}>
+                    <Link href={`/movie/${movie.id}`} className={"w-[120px] sm:w-[250px]"} key={index}>
                         <img src={movie.image} key={index}
                              className={"w-full h-full rounded-xl transition duration-300 hover:scale-105"}/>
                     </Link>

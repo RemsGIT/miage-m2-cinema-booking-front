@@ -15,6 +15,7 @@ import {TicketClient} from "@/components/ticket/ticket-client";
 import {TicketSuccess} from "@/components/ticket/ticket-success";
 import Link from "next/link";
 import axios from "@/lib/axios";
+import {Ticket} from "@/types";
 
 const formSchema = z.object({
     session: z.object({
@@ -73,12 +74,14 @@ export const BuyTicketButton = ({movie_id}: { movie_id: number }) => {
                 
                 const seats = data.seats
                 let isSuccess = true
+                
+                const tickets: Ticket[] = []
                 for (const seat of seats) {
                     let result = await axios.post('/tickets', {
                         ticket: {
                             session: {id: data.session.id},
                             seat: seat.toString(),
-                            amount: data.session.price // todo: should not pass the amount here, should be in backend with session
+                            amount: data.session.price
                         },
                         client: {
                             firstname: data.client.firstname,
@@ -87,27 +90,38 @@ export const BuyTicketButton = ({movie_id}: { movie_id: number }) => {
                         }
                     })
                     
-                    if(!result.data.success) isSuccess = false
+                    if(result.data.success) {
+                        tickets.push(result.data.ticket)
+                    }
+                    else {
+                        isSuccess = false
+                    }
                 }
                 
                 if(isSuccess) {
                     setStep(3)
+                    
+                    axios.post('/tickets/sendmail', tickets)
+                    
                 }
+                setIsSubmitting(false)
                 break;
         }
     }
 
     return (
-        <Drawer open={open} onOpenChange={open => setOpen(open)} onClose={() => {
+        <Drawer open={open}  onOpenChange={open => setOpen(open)} onClose={() => {
             document.body.style.background = '';
             form.reset()
             setStep(0)
             setOpen(false)
         }}>
             <DrawerTrigger className={"w-full"}>
-                <Button className={"w-full gap-2 py-2 h-max"} type={"button"} onClick={() => setOpen(true)}>
-                    <Banknote/>
-                    <span className={"text-lg"}>Réserver une séance</span>
+                <Button className={"w-full gap-2 py-2 h-max"} type={"button"} onClick={() => setOpen(true)} asChild>
+                    <div>
+                        <Banknote/>
+                        <span className={"text-lg"}>Réserver une séance</span>
+                    </div>
                 </Button>
             </DrawerTrigger>
             <DrawerContent>
@@ -144,7 +158,7 @@ export const BuyTicketButton = ({movie_id}: { movie_id: number }) => {
                                     </h2>
 
                                     {step === 0 && <TicketSessions id={movie_id}/>}
-                                    {step === 1 && <TicketSeats session_id={1}/>}
+                                    {step === 1 && <TicketSeats session_id={Number(form.getValues("session.id"))}/>}
                                     {step === 2 && <TicketClient/>}
                                     {step === 3 && <TicketSuccess/>}
 

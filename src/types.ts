@@ -32,3 +32,18 @@ export interface Room {
     name: string,
     capacity: number
 }
+
+export interface Ticket {
+    id: number,
+    seat: number,
+    amount: number,
+    client: Client
+    
+}
+
+export interface Client {
+    id: number,
+    firstname: string,
+    lastname: string,
+    email: string
+}

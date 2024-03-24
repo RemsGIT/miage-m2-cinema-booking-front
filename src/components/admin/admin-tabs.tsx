@@ -13,31 +13,17 @@ export const AdminTabs = () => {
     
     const searchParams = useSearchParams()
     
-    const defaultTab = searchParams.get('tab') ?? 'dashboard'
+    const defaultTab = searchParams.get('tab') ?? 'movies'
     
     return (
         <Tabs defaultValue={defaultTab} className={"m-4"}>
             <TabsList className={"flex  no-scrollbar overflow-auto justify-start"}>
-                <TabsTrigger className={"whitespace-nowrap"} value={"dashboard"} >Tableau de bord</TabsTrigger>
                 <TabsTrigger className={"whitespace-nowrap"} value={"movies"} >Films</TabsTrigger>
                 <TabsTrigger className={"whitespace-nowrap"} value={"sessions"} >Séances</TabsTrigger>
                 <TabsTrigger className={"whitespace-nowrap"} value={"rooms"} >Salles</TabsTrigger>
                 <TabsTrigger className={"whitespace-nowrap"} value={"types"} >Types</TabsTrigger>
                 <TabsTrigger className={"whitespace-nowrap"} value={"categories"} >Catégories</TabsTrigger>
-                <TabsTrigger className={"whitespace-nowrap"} value={"tickets"} >Tickets</TabsTrigger>
             </TabsList>
-            <TabsContent value={"dashboard"}>
-                <motion.div
-                    initial={{ y: 10, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -10, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className={"flex flex-wrap gap-4"}
-                >
-                    <p>ok</p>
-                </motion.div>
-
-            </TabsContent>
             <TabsContent value={"movies"}>
                     <AdminMovies />
             </TabsContent>
@@ -86,18 +72,6 @@ export const AdminTabs = () => {
                     className={"flex flex-wrap gap-4"}
                 >
                     <AdminCategories />
-                </motion.div>
-
-            </TabsContent>
-            <TabsContent value={"tickets"}>
-                <motion.div
-                    initial={{ y: 10, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -10, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className={"flex flex-wrap gap-4"}
-                >
-                    <p>ok</p>
                 </motion.div>
 
             </TabsContent>

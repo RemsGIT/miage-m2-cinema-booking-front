@@ -13,7 +13,7 @@ import {FormField, FormMessage} from "@/components/ui/form";
 import {Check, CheckCircle, CheckCircle2} from "lucide-react";
 
 const currentDate = new Date();
-const allDates = [...Array(7 + 1)]
+const allDates = [...Array(14 + 1)]
     .map((_, index) => new Date(currentDate.getTime() + index * 24 * 60 * 60 * 1000))
     .sort((a, b) => a.getTime() - b.getTime());
 const formatDate = (dateString: string) => {
@@ -107,7 +107,7 @@ export const TicketSessions = ({id}: { id: number }) => {
                                 {getSessionsFromSelectedDate().map((session: Session, index) => {
                                     const date = new Date(session.date)
                                     return (
-                                        <Label>
+                                        <Label key={index}>
                                             <RadioGroupItem value={session.id.toString()} className={"hidden"} />
                                             <Card
                                                 className={`h-max cursor-pointer relative ${field.value?.id === session.id.toString() ? 'border-card outline outline-primary outline-2' : ''}`}
@@ -129,6 +129,9 @@ export const TicketSessions = ({id}: { id: number }) => {
                                         </Label>
                                     )
                                 })}
+                                {getSessionsFromSelectedDate()?.length === 0 && (
+                                    <p className={"text-gray-100 italic"}>Aucune séance pour ce jour</p>
+                                )}
                             </RadioGroup>
                             <FormMessage className={"text-primary mt-4 ml-2 text-xl"} />
                         </>

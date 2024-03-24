@@ -13,14 +13,14 @@ const MoviePage = ({params}:{params: {id: number}}) => {
                 <Link href={"/"}>
                     <ArrowLeft className={"text-foreground"} />
                 </Link>
-                <h3 className={"text-foreground text-xl col-span-2"}>Détail du film</h3>
+                <h3 className={"text-foreground text-xl col-span-2 lg:hidden"}>Détail du film</h3>
             </div>
             
             <div className={"mt-2"}>
                 <MovieDescription id={params.id} />
             </div>
             
-            <div className={"mx-2 mt-12"}>
+            <div className={"mx-2 mt-12 lg:hidden"}>
                 <BuyTicketButton movie_id={params.id} />
             </div>
         </div>

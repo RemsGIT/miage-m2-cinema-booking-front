@@ -30,11 +30,11 @@ export const MoviesByCategory = () => {
                 <Tabs defaultValue={categories[0].name}>
                     <TabsList className={"flex  no-scrollbar overflow-auto justify-start"}>
                         {categories.map(category => (
-                            <TabsTrigger className={"whitespace-nowrap"} value={category.name} >{category.name}</TabsTrigger>
+                            <TabsTrigger className={"whitespace-nowrap"} value={category.name} key={category.id}>{category.name}</TabsTrigger>
                         ))}
                     </TabsList>
                     {categories.map(category => (
-                        <TabsContent value={category.name}>
+                        <TabsContent value={category.name} key={category.id}>
                             <motion.div
                                 initial={{ y: 10, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
@@ -43,7 +43,7 @@ export const MoviesByCategory = () => {
                                 className={"flex flex-wrap gap-4"}
                             >
                                 {getMoviesByCategory(category.name).map(movie => (
-                                    <Link href={`/movie/${category.id}`}>
+                                    <Link href={`/movie/${movie.id}`} key={movie.id}>
                                         <img src={movie.image} alt={movie.name}
                                              className={"w-[170px] md:w-[200px] h-[230px] md:h-[300px] object-cover rounded-lg cursor-pointer transition hover:scale-105"}/>
                                     </Link>

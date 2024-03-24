@@ -5,7 +5,7 @@ import Link from "next/link";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "./ui/dropdown-menu";
 import {Button} from "@/components/ui/button";
 import {signOut} from "next-auth/react";
-import {ChevronDown, GanttChart, LogOut} from "lucide-react";
+import {ChevronDown, GanttChart, LogOut, User} from "lucide-react";
 import {useRouter} from "next/navigation";
 
 export const AuthProfileButton = () => {
@@ -21,7 +21,12 @@ export const AuthProfileButton = () => {
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="outline">
-                                    {session?.user.email}
+                                    <span className={"hidden md:block"}>
+                                        {session?.user.email}
+                                    </span>
+                                    <span className={"md:hidden"}>
+                                        <User />
+                                    </span>
                                     <ChevronDown className="ml-2 h-4 w-4"/>
                                 </Button>
                             </DropdownMenuTrigger>

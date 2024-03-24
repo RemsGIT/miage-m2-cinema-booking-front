@@ -53,7 +53,7 @@ export const AdminMovies = () => {
 
             setMovies(updatedMovies);
 
-            toast.success('Le film a bien été modifé')
+            toast.success('Le film a bien été modifié')
 
         }
         setIdToUpdate(undefined)
