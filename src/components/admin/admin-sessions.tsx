@@ -56,7 +56,12 @@ export const AdminSessions = () => {
         {
             accessorKey: "date",
             header: "Date",
-            cell: ({row}) => <p>{row.getValue('date')}</p>,
+            cell: ({row}) => {
+                const date = new Date(row.getValue('date'))
+                    return (
+                        <p> {date?.toLocaleDateString()} à {date?.getHours()}:{date?.getMinutes()}</p>
+                    )
+            },
         },
         {
             accessorKey: "room",

@@ -3,6 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import axios from "@/lib/axios";
 
 export const authConfig = {
+    trustHost: true,
     providers: [
         Credentials({
             name: "Credentials",
